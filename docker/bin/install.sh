@@ -82,6 +82,7 @@ php /tmp/composer-installer.php --install-dir=/usr/local/bin --filename=composer
 rm /tmp/composer-installer.php
 cd /vagrant
 composer install --no-scripts
+bash bin/version
 
 #
 # Finish
