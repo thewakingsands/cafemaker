@@ -58,15 +58,17 @@ docker exec -it cafemaker__web bash
 bash /cafemaker/bin/sc-download.sh
 ```
 
+这里会从 GitHub 上拖文件。如果国内服务器，可能拖不回来，自己想办法。手动下载不行，因为除了下载还做了一些拼 json 的操作。
+
 ### 解包游戏数据
 
 到服务器上，下载 /srv/cafemaker/data/web/SaintCoinach.Cmd 整个文件夹到 Windows 电脑中。
 
 编辑 `extract-allrawexd.bat` 文件，将其中游戏路径改为你自己安装的游戏路径。保存后，双击运行该文件。
 
-然后把生成的以游戏版本号命名的文件夹传回服务器上。
-
 下载 https://github.com/xivapi/ffxiv-datamining/raw/master/csv/ENpcResident.csv 文件，并将它放到 游戏版本号/raw-exd-all/ 文件夹下，改名为 `ENpcResident.en.csv` 。如果你有和国服对应版本的这个文件，用对应版本的更佳。
+
+然后把生成的以游戏版本号命名的文件夹传回服务器上。
 
 ### 导入游戏数据到 Redis
 
