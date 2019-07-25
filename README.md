@@ -17,6 +17,7 @@ docker network create --subnet=172.16.54.0/24 cafemaker
 TODO: 可以给出使用 docker-compose 启动服务的范例
 
 ```bash
+docker pull thewakingsands/cafemaker
 mkdir -p /srv/cafemaker/data/redis /srv/cafemaker/data/mysql /srv/cafemaker/data/elasticsearch /srv/cafemaker/data/web
 wget -O /srv/cafemaker/dotenv https://raw.githubusercontent.com/thewakingsands/cafemaker-web/cn/.env.dist
 docker run -d --name=cafemaker__redis --restart=always --network=cafemaker -v /srv/cafemaker/data/redis:/data redis
