@@ -97,7 +97,7 @@ bash /cafemaker/bin/sc-custom-redis.sh
 继续去 bash 里执行：
 
 ```bash
-bash /cafemaker/bin/sc-custom-es.sh
+bash /cafemaker/bin/sc-import-es.sh
 ```
 
 等跑完即可。跑这个比前两个还慢，可能需要四五十分钟。
