@@ -82,7 +82,10 @@ php /tmp/composer-installer.php --install-dir=/usr/local/bin --filename=composer
 rm /tmp/composer-installer.php
 cd /vagrant
 composer install --no-scripts
-bash bin/version
+
+echo 0 > ./git_version.txt
+echo 'docker' >> ./git_version.txt
+date +%s >> ./git_version.txt
 
 #
 # Finish
