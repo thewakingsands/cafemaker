@@ -18,18 +18,23 @@ TODO: 可以给出使用 docker-compose 启动服务的范例
 
 ```bash
 docker pull thewakingsands/cafemaker
+
 mkdir -p /srv/cafemaker/data/redis /srv/cafemaker/data/mysql /srv/cafemaker/data/elasticsearch /srv/cafemaker/data/web
+chown 1000:1000 /srv/cafemaker/data/elasticsearch/
+
 wget -O /srv/cafemaker/dotenv https://raw.githubusercontent.com/thewakingsands/cafemaker-web/cn/.env.dist
+
 docker run -d --name=cafemaker__redis --restart=always --network=cafemaker -v /srv/cafemaker/data/redis:/data redis
 docker run -d --name=cafemaker__mysql --restart=always --network=cafemaker -v /srv/cafemaker/data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root mysql:5.7
-docker run -d --name=cafemaker__elasticsearch --restart=always --network=cafemaker -e "discovery.type=single-node" -v /srv/cafemaker/data/elasticsearch:/usr/share/elasticsearch/data elasticsearch
+docker run -d --name=cafemaker__elasticsearch --restart=always --network=cafemaker -e "discovery.type=single-node" -e "ES_JAVA_OPTS=-Xms4G -Xmx4G" -v /srv/cafemaker/data/elasticsearch:/usr/share/elasticsearch/data elasticsearch:6.8.1
+
 docker run -d --name=cafemaker__web --restart=always --network=cafemaker -p 8081:80 -v /srv/cafemaker/data/web:/vagrant/data -v /srv/cafemaker/dotenv:/vagrant/.env thewakingsands/cafemaker
 ```
 
 ### 导入数据库
 
 ```bash
-curl https://raw.githubusercontent.com/thewakingsands/cafemaker-web/cn/vm/Database.sql | docker exec -it cafemaker__mysql mysql -uroot -proot
+curl https://raw.githubusercontent.com/thewakingsands/cafemaker-web/cn/vm/Database.sql | docker exec -i cafemaker__mysql mysql -uroot -proot
 ```
 
 到这里你应该可以访问服务器的 8081 端口，看到 xivapi 的界面了。
@@ -72,15 +77,27 @@ bash /cafemaker/bin/sc-download.sh
 
 ### 导入游戏数据到 Redis
 
-这部分比较麻烦，需要有一个大点内存的服务器， 16G 最好。继续在容器 shell 中操作：
+这部分比较吃内存，还吃单核性能，需要有一个大点内存的服务器。至少有 8G，推荐 16G。
+如果内存不够，可以用 swap 补，保证 swap+剩余内存 >= 6G 即可。
+注意，开 swap 强行撑内存跑会导致跑得很慢。
+
+继续在容器 shell 中操作：
 
 ```bash
 bash /cafemaker/bin/sc-import-redis.sh
 bash /cafemaker/bin/sc-custom-redis.sh
 ```
 
-执行两个脚本大概需要……呃，半小时左右。
+执行两个脚本大概需要……呃，半小时左右吧。
 
 ### 导入游戏数据到 ElasticSearch
 
-TBD
+导入 ES 需要跑 ES 的机器有大内存，给 ES 分 4~8G 内存最好。
+
+继续去 bash 里执行：
+
+```bash
+bash /cafemaker/bin/sc-custom-es.sh
+```
+
+等跑完即可。跑这个比前两个还慢，可能需要四五十分钟。
