@@ -35,6 +35,8 @@ cp /vagrant/vm/VagrantfileNginxDefault /etc/nginx/sites-available/default
 cp /vagrant/vm/VagrantfileNginx.conf /etc/nginx/nginx.conf
 sed -i 's#error_log /dev/null#error_log stderr#' /etc/nginx/nginx.conf
 
+nginx -t
+
 #
 # PHP + Composer + Imagick
 #
