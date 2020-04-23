@@ -15,13 +15,13 @@ jobs:
       run: |
         docker tag app "${IMAGE_NAME}:latest"
         docker push "${IMAGE_NAME}:latest"
-      if: github.ref == "refs/heads/master"
+      if: github.ref == 'refs/heads/master'
     - name: Publish tagged image
       run: |
         echo "Ref: ${GITHUB_REF}"
         docker tag app "${IMAGE_NAME}:${GITHUB_REF##*/}"
         docker push "${IMAGE_NAME}:${GITHUB_REF##*/}"
-      if: github.ref != "refs/heads/master"
+      if: github.ref != 'refs/heads/master'
     env:
       IMAGE_NAME: thewakingsands/cafemaker
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
