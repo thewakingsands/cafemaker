@@ -1,5 +1,10 @@
 name: Build
-on: [push]
+on:
+  push:
+    branches:
+      - master
+    release:
+      types: [published]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,3 +18,4 @@ jobs:
         name: thewakingsands/cafemaker
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
+        tags: "latest,${{ env.RELEASE_VERSION }}"
