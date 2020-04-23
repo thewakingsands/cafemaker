@@ -1,0 +1,31 @@
+version: '2.0'
+services:
+  web:
+    image: thewakingsands/cafemaker
+    ports:
+      - 8120:80
+    volumes:
+      - ./web:/vagrant
+      - ./docker/bin:/cafemaker/bin
+    links:
+      - mysql
+      - redis
+      - elasticsearch
+  redis:
+    image: redis:5.0.5
+    volumes:
+      - ./data/redis:/data
+  mysql:
+    image: mysql:5.7
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    environment: 
+      MYSQL_ROOT_PASSWORD: root
+  elasticsearch:
+    image: elasticsearch:6.8.1
+    volumes: 
+      - ./data/elasticsearch:/usr/share/elasticsearch/data
+    environment:
+      discovery.type: "single-node"
+      ES_JAVA_OPTS: "-Xms10G -Xmx10G"
+  
