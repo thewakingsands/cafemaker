@@ -15,7 +15,7 @@ useradd -m -g $MY_USER $MY_USER
 
 apt-get update -y
 apt-get upgrade -y
-apt-get install -y curl git build-essential locales software-properties-common tzdata
+apt-get install -y curl git build-essential locales software-properties-common tzdata subversion
 
 ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 dpkg-reconfigure -f noninteractive tzdata
