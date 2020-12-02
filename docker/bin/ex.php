@@ -7,7 +7,9 @@ $schema = [];
 foreach (scandir('/vagrant/data/SaintCoinach.Cmd/Definitions') as $file) {
   $fileinfo = pathinfo($file);
   if ($fileinfo['extension'] === 'json') {
-    $table = json5_decode(file_get_contents('/vagrant/data/SaintCoinach.Cmd/Definitions/'. $file), true);
+    $contents = file_get_contents('/vagrant/data/SaintCoinach.Cmd/Definitions/'. $file);
+    $contents = preg_replace("/^$bom/", '', $contents);
+    $table = json5_decode($contents, true);
     $schema[] = $table;
   }
 }
