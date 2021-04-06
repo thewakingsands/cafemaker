@@ -4,6 +4,7 @@ require('/cafemaker/bin/json5/Json5Decoder.php');
 require('/cafemaker/bin/json5/global.php');
 
 $schema = [];
+$bom = "\xEF\xBB\xBF";
 foreach (scandir('/vagrant/data/SaintCoinach.Cmd/Definitions') as $file) {
   $fileinfo = pathinfo($file);
   if ($fileinfo['extension'] === 'json') {
