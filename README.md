@@ -1,6 +1,6 @@
 # CafeMaker
 
-[![Build](https://github.com/thewakingsands/cafemaker/workflows/Build/badge.svg?branch=master)](https://github.com/thewakingsands/cafemaker/actions?query=workflow%3ABuild)
+[![Docker Repository on Quay](https://quay.io/repository/ffcafe/cafemaker/status "Docker Repository on Quay")](https://quay.io/repository/ffcafe/cafemaker)
 
 > A fork of [xivapi](https://github.com/xivapi/xivapi.com) for Chinese FFXIV players.
 
