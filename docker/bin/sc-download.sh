@@ -11,5 +11,6 @@ if [ -e /vagrant/data/SaintCoinach.Cmd/ex.json ]; then
 fi
 
 unzip -o /vagrant/data/SaintCoinach.Cmd.zip
+dos2unix $(find /vagrant/data/SaintCoinach.Cmd/Definitions -type f)
 
 php /cafemaker/bin/ex.php
