@@ -4,7 +4,7 @@
 
 **警告：除非你需要自己部署 CafeMaker 实例，否则你并不需要关心这里的内容。这里列出来的内容仅限希望向 CafeMaker 或 xivapi 贡献代码的开发者使用。**
 
-**提醒：这篇指南将花掉你三个小时的宝贵生命，并且需要准备一台有 16G 以上内存的服务器。**
+**提醒：这篇指南将花掉你六个小时的宝贵生命，并且需要准备一台有 16G 以上内存的服务器。**
 
 ## 初始化
 
@@ -134,7 +134,7 @@ bash /cafemaker/bin/sc-import-redis.sh
 bash /cafemaker/bin/sc-custom-redis.sh
 ```
 
-执行两个脚本大概需要……呃，半小时左右吧。
+执行两个脚本大概需要……呃，一小时左右吧。
 
 ### 导入游戏数据到 ElasticSearch
 
@@ -146,4 +146,4 @@ bash /cafemaker/bin/sc-custom-redis.sh
 bash /cafemaker/bin/sc-import-es.sh
 ```
 
-等跑完即可。跑这个比前两个还慢，可能需要四五十分钟。
+等跑完即可。跑这个比前两个还慢，可能需要一两个小时。
