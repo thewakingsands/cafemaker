@@ -53,7 +53,7 @@ fi
 
 apt-get update -y
 apt-get upgrade -y
-apt-get install -y curl git build-essential locales software-properties-common tzdata subversion
+apt-get install -y curl git wget unzip dos2unix build-essential locales software-properties-common tzdata subversion
 
 ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 dpkg-reconfigure -f noninteractive tzdata

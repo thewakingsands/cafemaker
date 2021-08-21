@@ -74,7 +74,22 @@ docker exec -it cafemaker__web bash
 bash /cafemaker/bin/sc-download.sh
 ```
 
-这里会从 GitHub 上拖文件。如果国内服务器，可能拖不回来，自己想办法。手动下载不行，因为除了下载还做了一些拼 json 的操作。
+这里会从 GitHub 上拖文件。如果国内服务器，可能拖不回来，可以尝试用一些 GitHub Proxy。
+
+```bash
+# 首先：
+export SC_DOWNLOAD_PREFIX=https://download.fastgit.org
+# 或者……
+# export SC_DOWNLOAD_PREFIX=https://gh.api.99988866.xyz/https://github.com
+# export SC_DOWNLOAD_PREFIX=https://ghproxy.com/https://github.com
+# export SC_DOWNLOAD_PREFIX=https://mirror.ghproxy.com/https://github.com
+# export SC_DOWNLOAD_PREFIX=https://github.techoc.workers.dev/https://github.com
+
+# 然后
+bash /cafemaker/bin/sc-download.sh
+```
+
+脚本除了下载定义文件，还会将 json 拼合到一起，给 xivapi 使用。
 
 ### 解包游戏数据
 
