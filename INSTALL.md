@@ -32,6 +32,8 @@ docker run -d --name=cafemaker__redis --restart=always --network=cafemaker -v /s
 docker run -d --name=cafemaker__mysql --restart=always --network=cafemaker -v /srv/cafemaker/data/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root mysql:5.7
 docker run -d --name=cafemaker__elasticsearch --restart=always --network=cafemaker -e "discovery.type=single-node" -e "ES_JAVA_OPTS=-Xms4G -Xmx4G" -v /srv/cafemaker/data/elasticsearch:/usr/share/elasticsearch/data elasticsearch:6.8.1
 
+docker exec -it cafemaker__elasticsearch elasticsearch-plugin install analysis-smartcn
+
 docker run -d --name=cafemaker__web --restart=always --network=cafemaker -p 8081:80 -v /srv/cafemaker/data/web:/vagrant/data -v /srv/cafemaker/dotenv:/vagrant/.env quay.io/ffcafe/cafemaker
 ```
 
@@ -40,6 +42,7 @@ docker run -d --name=cafemaker__web --restart=always --network=cafemaker -p 8081
 ```bash
 docker pull quay.io/ffcafe/cafemaker
 docker-compose up --no-build
+docker exec -it cafemaker_elasticsearch_1 elasticsearch-plugin install analysis-smartcn
 ```
 
 ### 导入数据库

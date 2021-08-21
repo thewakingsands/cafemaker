@@ -34,6 +34,7 @@ services:
     image: elasticsearch:6.8.1
     volumes: 
       - ./data/elasticsearch:/usr/share/elasticsearch/data
+      - ./data/elasticsearch-plugins:/usr/share/elasticsearch/plugins
     environment:
       discovery.type: "single-node"
       ES_JAVA_OPTS: "-Xms10G -Xmx10G"
