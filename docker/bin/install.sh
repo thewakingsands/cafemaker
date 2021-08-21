@@ -1,7 +1,32 @@
 #!/usr/bin/env bash
 
-set -e
-set -x
+# taken from https://unix.stackexchange.com/a/421403
+bashget() {
+  read proto server path <<< "${1//"/"/ }"
+  DOC=/${path// //}
+  HOST=${server//:*}
+  PORT=${server//*:}
+  [[ x"${HOST}" == x"${PORT}" ]] && PORT=80
+
+  exec 3<>/dev/tcp/${HOST}/$PORT
+
+  # send request
+  echo -en "GET ${DOC} HTTP/1.0\r\nHost: ${HOST}\r\n\r\n" >&3
+
+  # read the header, it ends in a empty line (just CRLF)
+  while IFS= read -r line ; do 
+      [[ "$line" == $'\r' ]] && break
+  done <&3
+
+  # read the data
+  nul='\0'
+  while IFS= read -d '' -r x || { nul=""; [ -n "$x" ]; }; do 
+      printf "%s$nul" "$x"
+  done <&3
+  exec 3>&-
+}
+
+set -xeo pipefail
 export DEBIAN_FRONTEND=noninteractive DEBCONF_NONINTERACTIVE_SEEN=true
 
 #
@@ -12,6 +37,19 @@ echo "Setting up"
 MY_USER=vagrant
 groupadd $MY_USER
 useradd -m -g $MY_USER $MY_USER
+
+if [ "$LOC" == "" ]; then
+    if (which curl > /dev/null); then
+        LOC=$(curl -s http://cf-ns.cn/cdn-cgi/trace | grep loc | cut -c 5-)
+    elif (which wget > /dev/null); then
+        LOC=$(wget -O- http://cf-ns.cn/cdn-cgi/trace  | grep loc | cut -c 5-)
+    else
+        LOC=$(bashget http://cf-ns.cn/cdn-cgi/trace  | grep loc | cut -c 5-)
+    fi
+fi
+if [ "$LOC" == "CN" ]; then
+    sed -i 's#/archive.ubuntu.com/#/opentuna.cn/#g' /etc/apt/sources.list
+fi
 
 apt-get update -y
 apt-get upgrade -y
@@ -44,27 +82,27 @@ echo "Installing: PHP + Composer"
 add-apt-repository ppa:ondrej/php -y
 apt-get update -y
 apt-get install -y \
-    php7.3-fpm \
+    php7.4-fpm \
     php-apcu \
     php-imagick \
-    php7.3-dev \
-    php7.3-cli \
-    php7.3-json \
-    php7.3-intl \
-    php7.3-mysql \
-    php7.3-sqlite \
-    php7.3-curl \
-    php7.3-gd \
-    php7.3-mbstring \
-    php7.3-dom \
-    php7.3-xml \
-    php7.3-zip \
-    php7.3-tidy \
-    php7.3-bcmath
+    php7.4-dev \
+    php7.4-cli \
+    php7.4-json \
+    php7.4-intl \
+    php7.4-mysql \
+    php7.4-sqlite \
+    php7.4-curl \
+    php7.4-gd \
+    php7.4-mbstring \
+    php7.4-dom \
+    php7.4-xml \
+    php7.4-zip \
+    php7.4-tidy \
+    php7.4-bcmath
 
-sed -i 's|display_errors = Off|display_errors = On|' /etc/php/7.3/fpm/php.ini
-sed -i 's|memory_limit = 128M|memory_limit = -1|' /etc/php/7.3/fpm/php.ini
-sed -i "s|www-data|$MY_USER|" /etc/php/7.3/fpm/pool.d/www.conf
+sed -i 's|display_errors = Off|display_errors = On|' /etc/php/7.4/fpm/php.ini
+sed -i 's|memory_limit = 128M|memory_limit = -1|' /etc/php/7.4/fpm/php.ini
+sed -i "s|www-data|$MY_USER|" /etc/php/7.4/fpm/pool.d/www.conf
 
 #
 # phpredis
@@ -74,9 +112,9 @@ mkdir -p /src/phpredis
 git clone https://github.com/phpredis/phpredis.git /src/phpredis
 cd /src/phpredis && git checkout 5.0.1 && phpize && ./configure && make && make install
 rm -rf /src/phpredis
-echo "extension=redis.so" > /etc/php/7.3/mods-available/redis.ini
-ln -sf /etc/php/7.3/mods-available/redis.ini /etc/php/7.3/fpm/conf.d/20-redis.ini
-ln -sf /etc/php/7.3/mods-available/redis.ini /etc/php/7.3/cli/conf.d/20-redis.ini
+echo "extension=redis.so" > /etc/php/7.4/mods-available/redis.ini
+ln -sf /etc/php/7.4/mods-available/redis.ini /etc/php/7.4/fpm/conf.d/20-redis.ini
+ln -sf /etc/php/7.4/mods-available/redis.ini /etc/php/7.4/cli/conf.d/20-redis.ini
 
 # composer
 curl https://getcomposer.org/installer > /tmp/composer-installer.php

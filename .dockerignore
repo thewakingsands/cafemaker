@@ -1,0 +1,10 @@
+/.env
+/bin
+/myenv
+/data
+/web/sites
+/web/documents
+/web/data
+/web/composer.phar
+/.git
+/web/.git

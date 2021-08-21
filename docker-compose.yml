@@ -2,25 +2,34 @@ version: '2.0'
 services:
   web:
     image: thewakingsands/cafemaker
+    build:
+      context: .
+      args:
+        - http_proxy
+        - https_proxy
+        - all_proxy
     ports:
       - 8120:80
     volumes:
       - ./web:/vagrant
       - ./docker/bin:/cafemaker/bin
     links:
-      - mysql
-      - redis
-      - elasticsearch
+      - mysql:cafemaker__mysql
+      - redis:cafemaker__redis
+      - elasticsearch:cafemaker__elasticsearch
+    networks: [ cafemaker ]
   redis:
     image: redis:5.0.5
     volumes:
       - ./data/redis:/data
+    networks: [ cafemaker ]
   mysql:
     image: mysql:5.7
     volumes:
       - ./data/mysql:/var/lib/mysql
     environment: 
       MYSQL_ROOT_PASSWORD: root
+    networks: [ cafemaker ]
   elasticsearch:
     image: elasticsearch:6.8.1
     volumes: 
@@ -28,4 +37,10 @@ services:
     environment:
       discovery.type: "single-node"
       ES_JAVA_OPTS: "-Xms10G -Xmx10G"
-  
+    networks: [ cafemaker ]
+networks:
+  cafemaker:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.127.0/24

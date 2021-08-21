@@ -18,7 +18,7 @@ docker network create --subnet=172.16.54.0/24 cafemaker
 
 ### 起服务
 
-TODO: 可以给出使用 docker-compose 启动服务的范例
+#### 手动
 
 ```bash
 docker pull thewakingsands/cafemaker
@@ -33,6 +33,13 @@ docker run -d --name=cafemaker__mysql --restart=always --network=cafemaker -v /s
 docker run -d --name=cafemaker__elasticsearch --restart=always --network=cafemaker -e "discovery.type=single-node" -e "ES_JAVA_OPTS=-Xms4G -Xmx4G" -v /srv/cafemaker/data/elasticsearch:/usr/share/elasticsearch/data elasticsearch:6.8.1
 
 docker run -d --name=cafemaker__web --restart=always --network=cafemaker -p 8081:80 -v /srv/cafemaker/data/web:/vagrant/data -v /srv/cafemaker/dotenv:/vagrant/.env thewakingsands/cafemaker
+```
+
+#### 使用 docker-compose
+
+```bash
+docker pull thewakingsands/cafemaker
+docker-compose up --no-build
 ```
 
 ### 导入数据库
