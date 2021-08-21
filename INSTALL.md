@@ -101,11 +101,31 @@ bash /cafemaker/bin/sc-download.sh
 
 然后把生成的以游戏版本号命名的文件夹传回服务器上。
 
+### 下载补丁数据
+
+这部分数据包含每个物品是在哪个补丁被添加到游戏的，由 xivapi 维护。
+
+```bash
+bash /cafemaker/bin/sc-gamepatch.sh
+```
+
+如果国内服务器下载太慢的话，可以尝试加速：
+
+```bash
+export SC_CLONE_PREFIX=https://hub.fastgit.org
+
+# 或者……
+# export SC_CLONE_PREFIX=https://gh.api.99988866.xyz/https://github.com
+# export SC_CLONE_PREFIX=https://ghproxy.com/https://github.com
+# export SC_CLONE_PREFIX=https://mirror.ghproxy.com/https://github.com
+# export SC_CLONE_PREFIX=https://github.techoc.workers.dev/https://github.com
+```
+
 ### 导入游戏数据到 Redis
 
 这部分比较吃内存，还吃单核性能，需要有一个大点内存的服务器。至少有 8G，推荐 16G。
-如果内存不够，可以用 swap 补，保证 swap+剩余内存 >= 6G 即可。
-注意，开 swap 强行撑内存跑会导致跑得很慢。
+
+如果内存不够，可以用 swap 补，保证 swap+剩余内存 >= 6G 即可。开 swap 强行撑内存跑会导致跑得很慢。
 
 继续在容器 shell 中操作：
 

@@ -24,6 +24,7 @@ php /vagrant/bin/console SaintCoinachRedisCustomCommand PlaceName
 php /vagrant/bin/console SaintCoinachRedisCustomCommand Servers
 php /vagrant/bin/console SaintCoinachRedisCustomCommand Stain
 php /vagrant/bin/console SaintCoinachRedisCustomCommand TripleTriadCardDescriptions
+php /vagrant/bin/console SaintCoinachRedisCustomCommand GatheringPoint
 php /vagrant/bin/console SaintCoinachRedisCustomCommand Characters
 php /vagrant/bin/console SaintCoinachRedisCustomCommand CraftLeve
 php /vagrant/bin/console SaintCoinachRedisCustomCommand Leve

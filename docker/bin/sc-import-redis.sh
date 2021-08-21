@@ -1,13 +1,13 @@
 #!/bin/bash
 set -eo pipefail
 
-php /vagrant/bin/console SaintCoinachJsonCacheCommand
+/usr/bin/php /vagrant/bin/console SaintCoinachJsonCacheCommand
 
-count=$(ls /vagrant/data/gamedocuments/json | wc -l)
+for i in {1..40}
+do
+  start_point=$(( $i * 25 ))
 
-for (( i = 0; i <= count; ++i )); do
-  echo "# $i / $count"
-  php /vagrant/bin/console SaintCoinachRedisCommand $i 1 1 -q
+  echo " --------- Loop: $i / 40 - chunk: $start_point ------------------------------------"
+
+  /usr/bin/php /vagrant/bin/console SaintCoinachRedisCommand --start=$start_point --count=25 --full=1 -q
 done
-
-php /vagrant/bin/console SaintCoinachRedisCommand 1 100000 1 ENpcBase
