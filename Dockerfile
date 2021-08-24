@@ -1,4 +1,4 @@
-FROM ubuntu:bionic
+FROM quay.io/dockerhub/ubuntu:bionic
 
 ADD /web /vagrant
 ADD /docker/bin /cafemaker/bin
