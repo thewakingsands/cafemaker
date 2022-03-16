@@ -83,8 +83,8 @@ add-apt-repository ppa:ondrej/php -y
 apt-get update -y
 apt-get install -y \
     php7.4-fpm \
-    php-apcu \
-    php-imagick \
+    php7.4-apcu \
+    php7.4-imagick \
     php7.4-dev \
     php7.4-cli \
     php7.4-json \
