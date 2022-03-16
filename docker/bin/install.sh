@@ -40,11 +40,11 @@ useradd -m -g $MY_USER $MY_USER
 
 if [ "$LOC" == "" ]; then
     if (which curl > /dev/null); then
-        LOC=$(curl -s http://cf-ns.cn/cdn-cgi/trace | grep loc | cut -c 5-)
+        LOC=$(curl -s http://cf-ns.com/cdn-cgi/trace | grep loc | cut -c 5-)
     elif (which wget > /dev/null); then
-        LOC=$(wget -O- http://cf-ns.cn/cdn-cgi/trace  | grep loc | cut -c 5-)
+        LOC=$(wget -O- http://cf-ns.com/cdn-cgi/trace  | grep loc | cut -c 5-)
     else
-        LOC=$(bashget http://cf-ns.cn/cdn-cgi/trace  | grep loc | cut -c 5-)
+        LOC=$(bashget http://cf-ns.com/cdn-cgi/trace  | grep loc | cut -c 5-)
     fi
 fi
 if [ "$LOC" == "CN" ]; then
