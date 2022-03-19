@@ -1,6 +1,6 @@
 # CafeMaker
 
-[![Docker Repository on Quay](https://quay.io/repository/ffcafe/cafemaker/status "Docker Repository on Quay")](https://quay.io/repository/ffcafe/cafemaker)
+[![Docker](https://github.com/thewakingsands/cafemaker/actions/workflows/docker.yml/badge.svg)](https://github.com/thewakingsands/cafemaker/actions/workflows/docker.yml)
 
 > A fork of [xivapi](https://github.com/xivapi/xivapi.com) for Chinese FFXIV players.
 
