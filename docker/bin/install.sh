@@ -103,6 +103,11 @@ apt-get install -y \
 sed -i 's|display_errors = Off|display_errors = On|' /etc/php/7.4/fpm/php.ini
 sed -i 's|memory_limit = 128M|memory_limit = -1|' /etc/php/7.4/fpm/php.ini
 sed -i "s|www-data|$MY_USER|" /etc/php/7.4/fpm/pool.d/www.conf
+sed -i 's|pm.max_children = 5|pm.max_children = 100' /etc/php/7.4/fpm/pool.d/www.conf
+sed -i 's|pm.start_servers = 2|pm.start_servers = 50' /etc/php/7.4/fpm/pool.d/www.conf
+sed -i 's|pm.min_spare_servers = 1|pm.min_spare_servers = 10' /etc/php/7.4/fpm/pool.d/www.conf
+sed -i 's|pm.max_spare_servers = 3|pm.max_spare_servers = 30' /etc/php/7.4/fpm/pool.d/www.conf
+echo 'pm.max_requests = 500' >> /etc/php/7.4/fpm/pool.d/www.conf
 
 #
 # phpredis
