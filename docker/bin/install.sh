@@ -60,6 +60,11 @@ dpkg-reconfigure -f noninteractive tzdata
 
 locale-gen en_GB.UTF-8
 
+echo "Installing: Git"
+add-apt-repository ppa:git-core/ppa -y
+apt-get update
+apt-get install -y git
+
 #
 # NGINX
 #
